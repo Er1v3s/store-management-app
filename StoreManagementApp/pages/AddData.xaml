@@ -4,26 +4,133 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StoreManagementApp.pages"
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="AddData" Height="400" Width="320" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="Transparent">
-    
-    <Grid>
 
-        <Border CornerRadius="10" BorderThickness="2" BorderBrush="#597ef3" Background="#eff2f7">
+    <Border CornerRadius="10" BorderThickness="2" BorderBrush="#597ef3" Background="#eff2f7">
+        <Grid>
 
-            <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Top bar -->
+            <Grid Grid.Row="0">
+
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120" 
+                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="0" Grid.Column="0" Background="#597ef3">
+                    <!-- Close Window Button -->
+                    <Button Margin="2.5 0 0 0" Style="{StaticResource circleButton}" Foreground="#ff605c">
+                        <Icon:PackIconMaterial Kind="Circle" Width="15" Height="15"/>
+                    </Button>
+                    <Button Margin="0 0 0 0" Style="{StaticResource closeButton}" Click="CloseWindowButton">
+                        <Icon:PackIconMaterial Kind="WindowClose" Width="8" Height="8"/>
+                    </Button>
+
+                    <!-- Minimalize Window Button -->
+                    <Button Margin="27.5 0 0 0" Style="{StaticResource circleButton}" Foreground="#ffbd44">
+                        <Icon:PackIconMaterial Kind="Circle" Width="15" Height="15"/>
+                    </Button>
+                    <Button Margin="25 0 0 0" Style="{StaticResource closeButton}" Click="MinimalizeWindowButton">
+                        <Icon:PackIconMaterial Kind="Minus" Width="8" Height="8"/>
+                    </Button>
+
+                    <!-- Maximalize Window Button -->
+                    <Button Margin="52.5 0 0 0" Style="{StaticResource circleButton}" Foreground="#00ca4e">
+                        <Icon:PackIconMaterial Kind="Circle" Width="15" Height="15"/>
+                    </Button>
+                    <Button Margin="50 0 0 0" Style="{StaticResource closeButton}" Click="MaximalizeWindowButton">
+                        <Icon:PackIconMaterial Kind="Fullscreen" Width="8" Height="8"/>
+                    </Button>
+
+
+                </Grid>
+
+                <Grid Grid.Row="0" Grid.Column="2" Background="#597ef3">
+                    <TextBlock Text="Dodaj nowy produkt" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Margin="0 0 0 0" FontWeight="SemiBold" Foreground="white"/>
+                </Grid>
+
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="0 0 0 0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-                <StackPanel Grid.Column="2">
-                    
+                <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0">
+                    <TextBlock Text="Nazwa" FontSize="16"/>
                 </StackPanel>
+
+                <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0">
+                    <TextBlock Text="Kategoria" FontSize="16"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0">
+                    <TextBlock Text="Producent" FontSize="16"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0">
+                    <TextBlock Text="Ilość" FontSize="16"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0">
+                    <TextBlock Text="Cena" FontSize="16"/>
+                </StackPanel>
+
+                <StackPanel Grid.ColumnSpan="2" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                    <Button Style="{StaticResource addButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Dodaj produkt" FontSize="16"/>
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
+
+
+                <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="176" Margin="20 0 20 0">
+                    <TextBox Height="25" FontSize="16"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="176" Margin="20 0 20 0">
+                    <TextBox Height="25" FontSize="16"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Width="176" Margin="20 0 20 0">
+                    <TextBox Height="25" FontSize="16"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Width="176" Margin="20 0 20 0">
+                    <TextBox Height="25" FontSize="16"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Width="176" Margin="20 0 20 0">
+                    <TextBox Height="25" FontSize="16"/>
+                </StackPanel>
+
             </Grid>
-            
-        </Border>
-        
-    </Grid>
+
+        </Grid>
+    </Border>
 </Window>

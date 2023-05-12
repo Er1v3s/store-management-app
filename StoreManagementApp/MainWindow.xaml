@@ -174,7 +174,7 @@
                 </Grid>
 
                 <!-- Products Datagrid -->
-                <DataGrid Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="5" x:Name="productsDataGrid">
+                <DataGrid Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="5" x:Name="productsDataGrid" SelectionChanged="productsDataGrid_SelectionChanged">
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}">
                             <DataGridCheckBoxColumn.HeaderTemplate>
@@ -197,8 +197,9 @@
                         </DataGridTemplateColumn>
 
                         <DataGridTextColumn Header="Kategoria" IsReadOnly="True" Width="*" Binding="{Binding Category}"/>
+                        <DataGridTextColumn Header="Producent" IsReadOnly="True" Width="*" Binding="{Binding Provider}"/>
                         <DataGridTextColumn Header="Ilość" IsReadOnly="True" Width="*" Binding="{Binding Amount}"/>
-                        <DataGridTextColumn Header="Dostawca" IsReadOnly="True" Width="*" Binding="{Binding Provider}"/>
+                        <DataGridTextColumn Header="Cena" IsReadOnly="True" Width="*" Binding="{Binding Provider}"/>
 
                         <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                             <DataGridTemplateColumn.CellTemplate>
