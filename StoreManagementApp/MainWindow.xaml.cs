@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StoreManagementApp.pages;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +13,7 @@ namespace StoreManagementApp
         public MainWindow()
         {
             InitializeComponent();
-            StateChanged += Window_StateChanged;
+            this.StateChanged += new EventHandler(Window_StateChanged);
 
             var converter = new BrushConverter();
             ObservableCollection<Product> products = new ObservableCollection<Product>();
@@ -68,77 +69,38 @@ namespace StoreManagementApp
 
         private void Window_StateChanged(object sender, EventArgs e)
         {
-            if (WindowState == WindowState.Maximized)
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            double taskbarHeight = SystemParameters.PrimaryScreenHeight - SystemParameters.WorkArea.Height - 7;
+
+            if (this.WindowState == WindowState.Maximized)
             {
+                windowBorder.Margin = new Thickness(7, 7, 7, 0);
                 windowBorder.CornerRadius = new CornerRadius(0);
-                windowBorder.BorderThickness = new Thickness(7);
+                this.MaxHeight = screenHeight - taskbarHeight;
+                Leftbar.CornerRadius = new CornerRadius(0, 50, 0, 0);
             }
             else
             {
+                windowBorder.Margin = new Thickness(0);
                 windowBorder.CornerRadius = new CornerRadius(10);
-                windowBorder.BorderThickness = new Thickness(0);
+                Leftbar.CornerRadius = new CornerRadius(0, 50, 0, 10);
             }
         }
 
-
-        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        private void DragWindow(object sender, MouseButtonEventArgs e)
         {
-            if(e.ChangedButton == MouseButton.Left)
+            if (e.ChangedButton == MouseButton.Left)
             {
                 this.DragMove();
             }
         }
 
-        private bool IsMaximized = false;
-        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Show_AddData_dialogBox(object sender, RoutedEventArgs e)
         {
-            if(e.ClickCount == 2)
-            {
-                if(IsMaximized)
-                {
-                    this.WindowState = WindowState.Normal;
-                    this.Width = 1080;
-                    this.Height = 720;
+            AddData AddDataWindow = new AddData();
 
-                    IsMaximized = false;
-                }
-                else
-                {
-                    this.WindowState = WindowState.Maximized;
-
-                    IsMaximized = true;
-                }
-            }
+            AddDataWindow.Show();
         }
-
-        private void CloseWindowButton(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
-        private void MinimalizeWindowButton(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
-
-        private void MaximalizeWindowButton(object sender, RoutedEventArgs e)
-        {
-            if (IsMaximized)
-            {
-                this.WindowState = WindowState.Normal;
-                this.Width = 1080;
-                this.Height = 720;
-
-                IsMaximized = false;
-            }
-            else
-            {
-                this.WindowState = WindowState.Maximized;
-
-                IsMaximized = true;
-            }
-        }
-
     }
 
     public class Product
