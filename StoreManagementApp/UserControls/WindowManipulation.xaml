@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="StoreManagementApp.UserControls.WindowManipulation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StoreManagementApp.UserControls"
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="75">
+    <Grid Background="Transparent">
+        <!-- Close Window Button -->
+        <Button Margin="2.5 0 0 0" Style="{StaticResource circleButton}" Foreground="#ff605c">
+            <Icon:PackIconMaterial Kind="Circle" Width="15" Height="15"/>
+        </Button>
+        <Button Margin="0 0 0 0" Style="{StaticResource closeButton}" Click="CloseWindowButton">
+            <Icon:PackIconMaterial Kind="WindowClose" Width="8" Height="8"/>
+        </Button>
+
+        <!-- Minimalize Window Button -->
+        <Button Margin="27.5 0 0 0" Style="{StaticResource circleButton}" Foreground="#ffbd44">
+            <Icon:PackIconMaterial Kind="Circle" Width="15" Height="15"/>
+        </Button>
+        <Button Margin="25 0 0 0" Style="{StaticResource closeButton}" Click="MinimalizeWindowButton">
+            <Icon:PackIconMaterial Kind="Minus" Width="8" Height="8"/>
+        </Button>
+
+        <!-- Maximalize Window Button -->
+        <Button Margin="52.5 0 0 0" Style="{StaticResource circleButton}" Foreground="#00ca4e">
+            <Icon:PackIconMaterial Kind="Circle" Width="15" Height="15"/>
+        </Button>
+        <Button Margin="50 0 0 0" Style="{StaticResource closeButton}" Click="MaximalizeWindowButton">
+            <Icon:PackIconMaterial Kind="Fullscreen" Width="8" Height="8"/>
+        </Button>
+    </Grid>
+</UserControl>
