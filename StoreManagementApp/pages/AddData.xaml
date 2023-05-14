@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="AddData" Height="400" Width="320" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="Transparent">
 
-    <Border CornerRadius="10" BorderThickness="2" BorderBrush="#597ef3" Background="#eff2f7">
+    <Border CornerRadius="10" BorderThickness="2" BorderBrush="#597ef3" Background="#eff2f7" MouseDown="DragWindow">
         <Grid>
 
             <Grid.RowDefinitions>
@@ -113,20 +113,24 @@
                     <TextBox Height="25" FontSize="16"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="176" Margin="20 0 20 0">
-                    <TextBox Height="25" FontSize="16"/>
-                </StackPanel>
+                <ComboBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="176" Margin="20 0 20 0">
+                        <ComboBoxItem>Wybór 1</ComboBoxItem>
+                        <ComboBoxItem>Wybór 2</ComboBoxItem>
+                        <ComboBoxItem>Wybór 3</ComboBoxItem>
+                </ComboBox>
 
-                <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Width="176" Margin="20 0 20 0">
-                    <TextBox Height="25" FontSize="16"/>
-                </StackPanel>
+                <ComboBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Width="176" Margin="20 0 20 0">
+                    <ComboBoxItem>Wybór 1</ComboBoxItem>
+                    <ComboBoxItem>Wybór 2</ComboBoxItem>
+                    <ComboBoxItem>Wybór 3</ComboBoxItem>
+                </ComboBox>
 
                 <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Width="176" Margin="20 0 20 0">
-                    <TextBox Height="25" FontSize="16"/>
+                    <TextBox Height="25" FontSize="16" PreviewTextInput="NumberValidationTextBox"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Width="176" Margin="20 0 20 0">
-                    <TextBox Height="25" FontSize="16"/>
+                    <TextBox Height="25" FontSize="16" PreviewTextInput="NumberValidationTextBox"/>
                 </StackPanel>
 
             </Grid>

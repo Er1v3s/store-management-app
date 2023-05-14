@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace StoreManagementApp.pages
 {
@@ -22,6 +15,45 @@ namespace StoreManagementApp.pages
         public AddData()
         {
             InitializeComponent();
+
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !AreAllValidNumericChars(e.Text);
+        }
+
+        private static bool AreAllValidNumericChars(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+            return true;
+        }
+
+
+        private readonly WindowHelper _windowHelper = new WindowHelper();
+
+        private void DragWindow(object sender, MouseButtonEventArgs e)
+        {
+            _windowHelper.DragWindow(sender, e);
+        }
+
+        private void CloseWindowButton(object sender, RoutedEventArgs e)
+        {
+            _windowHelper.CloseWindow(sender, e);
+        }
+
+        private void MinimalizeWindowButton(object sender, RoutedEventArgs e)
+        {
+            _windowHelper.MinimalizeWindow(sender, e);
+        }
+
+        private void MaximalizeWindowButton(object sender, RoutedEventArgs e)
+        {
+            _windowHelper.MaximalizeWindow(sender, e);
         }
     }
 }
