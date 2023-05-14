@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StoreManagementApp.pages;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,7 +16,27 @@ namespace StoreManagementApp.pages
         public AddData()
         {
             InitializeComponent();
+            this.StateChanged += new EventHandler(Window_StateChanged);
+        }
 
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            double taskbarHeight = SystemParameters.PrimaryScreenHeight - SystemParameters.WorkArea.Height - 7;
+
+            if (this.WindowState == WindowState.Maximized)
+            {
+                windowBorder.Margin = new Thickness(7, 7, 7, 0);
+                windowBorder.CornerRadius = new CornerRadius(0);
+                this.MaxHeight = screenHeight - taskbarHeight;
+                topBar.CornerRadius = new CornerRadius(0);
+            }
+            else
+            {
+                windowBorder.Margin = new Thickness(0);
+                windowBorder.CornerRadius = new CornerRadius(10);
+                topBar.CornerRadius = new CornerRadius(5, 5, 0, 0);
+            }
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -33,27 +54,12 @@ namespace StoreManagementApp.pages
             return true;
         }
 
-
-        private readonly WindowHelper _windowHelper = new WindowHelper();
-
         private void DragWindow(object sender, MouseButtonEventArgs e)
         {
-            _windowHelper.DragWindow(sender, e);
-        }
-
-        private void CloseWindowButton(object sender, RoutedEventArgs e)
-        {
-            _windowHelper.CloseWindow(sender, e);
-        }
-
-        private void MinimalizeWindowButton(object sender, RoutedEventArgs e)
-        {
-            _windowHelper.MinimalizeWindow(sender, e);
-        }
-
-        private void MaximalizeWindowButton(object sender, RoutedEventArgs e)
-        {
-            _windowHelper.MaximalizeWindow(sender, e);
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
         }
     }
 }

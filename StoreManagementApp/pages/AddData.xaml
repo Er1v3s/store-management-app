@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StoreManagementApp.pages"
         xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:UserControl="clr-namespace:StoreManagementApp.UserControls"
         mc:Ignorable="d"
-        Title="AddData" Height="400" Width="320" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="Transparent">
+        Title="AddData" Height="400" Width="320" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="Transparent" AllowsTransparency="True">
 
-    <Border CornerRadius="10" BorderThickness="2" BorderBrush="#597ef3" Background="#eff2f7" MouseDown="DragWindow">
+    <Border Name="windowBorder" CornerRadius="10" BorderThickness="2" BorderBrush="#597ef3" Background="#eff2f7" MouseDown="DragWindow">
         <Grid>
 
             <Grid.RowDefinitions>
@@ -21,48 +22,26 @@
             </Grid.ColumnDefinitions>
 
             <!-- Top bar -->
-            <Grid Grid.Row="0">
+            <Border Name="topBar" CornerRadius="5 5 0 0" Background="#597ef3">
+                <Grid Grid.Row="0">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <Grid Grid.Row="0" Grid.Column="0" Background="#597ef3">
-                    <!-- Close Window Button -->
-                    <Button Margin="2.5 0 0 0" Style="{StaticResource circleButton}" Foreground="#ff605c">
-                        <Icon:PackIconMaterial Kind="Circle" Width="15" Height="15"/>
-                    </Button>
-                    <Button Margin="0 0 0 0" Style="{StaticResource closeButton}" Click="CloseWindowButton">
-                        <Icon:PackIconMaterial Kind="WindowClose" Width="8" Height="8"/>
-                    </Button>
+                    <Grid Grid.Row="0" Grid.Column="0" >
+                        <UserControl:WindowManipulation/>
+                    </Grid>
 
-                    <!-- Minimalize Window Button -->
-                    <Button Margin="27.5 0 0 0" Style="{StaticResource circleButton}" Foreground="#ffbd44">
-                        <Icon:PackIconMaterial Kind="Circle" Width="15" Height="15"/>
-                    </Button>
-                    <Button Margin="25 0 0 0" Style="{StaticResource closeButton}" Click="MinimalizeWindowButton">
-                        <Icon:PackIconMaterial Kind="Minus" Width="8" Height="8"/>
-                    </Button>
-
-                    <!-- Maximalize Window Button -->
-                    <Button Margin="52.5 0 0 0" Style="{StaticResource circleButton}" Foreground="#00ca4e">
-                        <Icon:PackIconMaterial Kind="Circle" Width="15" Height="15"/>
-                    </Button>
-                    <Button Margin="50 0 0 0" Style="{StaticResource closeButton}" Click="MaximalizeWindowButton">
-                        <Icon:PackIconMaterial Kind="Fullscreen" Width="8" Height="8"/>
-                    </Button>
-
+                    <Grid Grid.Row="0" Grid.Column="2">
+                        <TextBlock Text="Dodaj nowy produkt" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="SemiBold" Foreground="white" Height="25"/>
+                    </Grid>
 
                 </Grid>
+            </Border>
 
-                <Grid Grid.Row="0" Grid.Column="2" Background="#597ef3">
-                    <TextBlock Text="Dodaj nowy produkt" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Margin="0 0 0 0" FontWeight="SemiBold" Foreground="white"/>
-                </Grid>
-
-            </Grid>
-
-            <Grid Grid.Row="1" Margin="0 0 0 0">
+            <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="350">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
@@ -114,15 +93,25 @@
                 </StackPanel>
 
                 <ComboBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="176" Margin="20 0 20 0">
-                        <ComboBoxItem>Wybór 1</ComboBoxItem>
-                        <ComboBoxItem>Wybór 2</ComboBoxItem>
-                        <ComboBoxItem>Wybór 3</ComboBoxItem>
+                    <ComboBoxItem>Wędki</ComboBoxItem>
+                    <ComboBoxItem>Kołowrotki</ComboBoxItem>
+                    <ComboBoxItem>Żyłki</ComboBoxItem>
+                    <ComboBoxItem>Spławiki</ComboBoxItem>
+                    <ComboBoxItem>Ciężarki</ComboBoxItem>
+                    <ComboBoxItem>Haczyki</ComboBoxItem>
+                    <ComboBoxItem>Podbieraki</ComboBoxItem>
+                    <ComboBoxItem>Siatki</ComboBoxItem>
+                    <ComboBoxItem>Przynęty</ComboBoxItem>
+                    <ComboBoxItem>Zanęty</ComboBoxItem>
+                    <ComboBoxItem>Inne</ComboBoxItem>
                 </ComboBox>
 
                 <ComboBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Width="176" Margin="20 0 20 0">
-                    <ComboBoxItem>Wybór 1</ComboBoxItem>
-                    <ComboBoxItem>Wybór 2</ComboBoxItem>
-                    <ComboBoxItem>Wybór 3</ComboBoxItem>
+                    <ComboBoxItem>Shimano</ComboBoxItem>
+                    <ComboBoxItem>Konger</ComboBoxItem>
+                    <ComboBoxItem>Abu Garcia</ComboBoxItem>
+                    <ComboBoxItem>Rapala</ComboBoxItem>
+                    <ComboBoxItem>Savage Gear</ComboBoxItem>
                 </ComboBox>
 
                 <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Width="176" Margin="20 0 20 0">
