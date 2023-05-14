@@ -22,5 +22,13 @@ namespace StoreManagementApp.pages
                 this.DragMove();
             }
         }
+
+        private void Move_To_MainWindow(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+
+            Window.GetWindow(this).Close();
+        }
     }
 }

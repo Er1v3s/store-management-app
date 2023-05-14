@@ -101,6 +101,14 @@ namespace StoreManagementApp
 
             AddDataWindow.Show();
         }
+
+        private void LogOut(object sender, RoutedEventArgs e)
+        {
+            Login loginWindow = new();
+            loginWindow.Show();
+
+            Window.GetWindow(this).Close();
+        }
     }
 
     public class Product

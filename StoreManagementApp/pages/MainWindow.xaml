@@ -97,7 +97,7 @@
                             </Button>
                         </StackPanel>
 
-                        <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom"  DockPanel.Dock="Bottom" Margin="15 0 15 20" FontSize="18">
+                        <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom"  DockPanel.Dock="Bottom" Margin="15 0 15 20" FontSize="18" Click="LogOut">
                             <StackPanel Orientation="Horizontal">
                                 <Icon:PackIconMaterial Kind="Logout" Style="{StaticResource menuButtonIcon}"/>
                                 <TextBlock Text="Wyloguj" />

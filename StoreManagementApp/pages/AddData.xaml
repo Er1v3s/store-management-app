@@ -34,7 +34,7 @@
                         <UserControl:WindowManipulation/>
                     </Grid>
 
-                    <Grid Grid.Row="0" Grid.Column="2">
+                    <Grid Grid.Row="0" Grid.Column="1">
                         <TextBlock Text="Dodaj nowy produkt" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="SemiBold" Foreground="white" Height="25"/>
                     </Grid>
 
