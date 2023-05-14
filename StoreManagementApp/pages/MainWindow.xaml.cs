@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Data.SQLite;
 
 namespace StoreManagementApp
 {
@@ -18,52 +19,35 @@ namespace StoreManagementApp
             var converter = new BrushConverter();
             ObservableCollection<Product> products = new ObservableCollection<Product>();
 
-            // Create DataGrid Items Info
-            products.Add(new Product { id = "1", Name = "Wędka shimano", Category ="Wędki", Amount = "513", Provider = "John Doe" });
-            products.Add(new Product { id = "2", Name = "Haczyk konger", Category = "Haczyki", Amount = "764", Provider = "John Doe" });
-            products.Add(new Product { id = "3", Name = "Ciężarki bakalimo", Category = "ciężarki", Amount = "123", Provider = "John Doe" });
-            products.Add(new Product { id = "4", Name = "Podbierak wudusu", Category = "podbieraki", Amount = "456", Provider = "John Doe" });
-            products.Add(new Product { id = "5", Name = "Siatka ligthe", Category = "siatki", Amount = "654", Provider = "John Doe" });
-            products.Add(new Product { id = "6", Name = "Wędka geek bar", Category = "Wędki", Amount = "323", Provider = "John Doe" });
-            products.Add(new Product { id = "7", Name = "Wędka mozos", Category = "Wędki", Amount = "163", Provider = "John Doe" });
-            products.Add(new Product { id = "8", Name = "Kołowrotek belinmo", Category = "kołowrotki", Amount = "133", Provider = "John Doe" });
-            products.Add(new Product { id = "9", Name = "Kołowrotek watcher", Category = "kołowrotki", Amount = "213", Provider = "John Doe" });
-            products.Add(new Product { id = "10", Name = "Spławik przelotowy hakimito", Category = "Spławiki", Amount = "5113", Provider = "John Doe" });
+            string databaseLocation = "Data Source=E:\\VisualStudio\\StoreManagementApp\\StoreManagementApp\\database\\StoreManagementApp.db";
 
-            products.Add(new Product { id = "1", Name = "Wędka shimano", Category = "Wędki", Amount = "513", Provider = "John Doe" });
-            products.Add(new Product { id = "2", Name = "Haczyk konger", Category = "Haczyki", Amount = "764", Provider = "John Doe" });
-            products.Add(new Product { id = "3", Name = "Ciężarki bakalimo", Category = "ciężarki", Amount = "123", Provider = "John Doe" });
-            products.Add(new Product { id = "4", Name = "Podbierak wudusu", Category = "podbieraki", Amount = "456", Provider = "John Doe" });
-            products.Add(new Product { id = "5", Name = "Siatka ligthe", Category = "siatki", Amount = "654", Provider = "John Doe" });
-            products.Add(new Product { id = "6", Name = "Wędka geek bar", Category = "Wędki", Amount = "323", Provider = "John Doe" });
-            products.Add(new Product { id = "7", Name = "Wędka mozos", Category = "Wędki", Amount = "163", Provider = "John Doe" });
-            products.Add(new Product { id = "8", Name = "Kołowrotek belinmo", Category = "kołowrotki", Amount = "133", Provider = "John Doe" });
-            products.Add(new Product { id = "9", Name = "Kołowrotek watcher", Category = "kołowrotki", Amount = "213", Provider = "John Doe" });
-            products.Add(new Product { id = "10", Name = "Spławik przelotowy hakimito", Category = "Spławiki", Amount = "5113", Provider = "John Doe" });
+            using (SQLiteConnection dbconnection = new SQLiteConnection(databaseLocation))
+            {
+                dbconnection.Open();
 
-            products.Add(new Product { id = "1", Name = "Wędka shimano", Category = "Wędki", Amount = "513", Provider = "John Doe" });
-            products.Add(new Product { id = "2", Name = "Haczyk konger", Category = "Haczyki", Amount = "764", Provider = "John Doe" });
-            products.Add(new Product { id = "3", Name = "Ciężarki bakalimo", Category = "ciężarki", Amount = "123", Provider = "John Doe" });
-            products.Add(new Product { id = "4", Name = "Podbierak wudusu", Category = "podbieraki", Amount = "456", Provider = "John Doe" });
-            products.Add(new Product { id = "5", Name = "Siatka ligthe", Category = "siatki", Amount = "654", Provider = "John Doe" });
-            products.Add(new Product { id = "6", Name = "Wędka geek bar", Category = "Wędki", Amount = "323", Provider = "John Doe" });
-            products.Add(new Product { id = "7", Name = "Wędka mozos", Category = "Wędki", Amount = "163", Provider = "John Doe" });
-            products.Add(new Product { id = "8", Name = "Kołowrotek belinmo", Category = "kołowrotki", Amount = "133", Provider = "John Doe" });
-            products.Add(new Product { id = "9", Name = "Kołowrotek watcher", Category = "kołowrotki", Amount = "213", Provider = "John Doe" });
-            products.Add(new Product { id = "10", Name = "Spławik przelotowy hakimito", Category = "Spławiki", Amount = "5113", Provider = "John Doe" });
+                string sql = "SELECT * FROM Product";
 
-            products.Add(new Product { id = "1", Name = "Wędka shimano", Category = "Wędki", Amount = "513", Provider = "John Doe" });
-            products.Add(new Product { id = "2", Name = "Haczyk konger", Category = "Haczyki", Amount = "764", Provider = "John Doe" });
-            products.Add(new Product { id = "3", Name = "Ciężarki bakalimo", Category = "ciężarki", Amount = "123", Provider = "John Doe" });
-            products.Add(new Product { id = "4", Name = "Podbierak wudusu", Category = "podbieraki", Amount = "456", Provider = "John Doe" });
-            products.Add(new Product { id = "5", Name = "Siatka ligthe", Category = "siatki", Amount = "654", Provider = "John Doe" });
-            products.Add(new Product { id = "6", Name = "Wędka geek bar", Category = "Wędki", Amount = "323", Provider = "John Doe" });
-            products.Add(new Product { id = "7", Name = "Wędka mozos", Category = "Wędki", Amount = "163", Provider = "John Doe" });
-            products.Add(new Product { id = "8", Name = "Kołowrotek belinmo", Category = "kołowrotki", Amount = "133", Provider = "John Doe" });
-            products.Add(new Product { id = "9", Name = "Kołowrotek watcher", Category = "kołowrotki", Amount = "213", Provider = "John Doe" });
-            products.Add(new Product { id = "10", Name = "Spławik przelotowy hakimito", Category = "Spławiki", Amount = "5113", Provider = "John Doe" });
+                SQLiteCommand command = new SQLiteCommand(sql, dbconnection);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int Id = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        string category = reader.GetString(2);
+                        string producent = reader.GetString(3);
+                        int availability = reader.GetInt32(4);
+                        int price = reader.GetInt32(5);
 
+                        products.Add(new Product { Id = Id, Name = name, Category = category, Producent = producent, Availability = availability, Price = price});
 
+                    }
+                }
+
+                dbconnection.Close();
+            }
+
+            foundPositions.Text = products.Count.ToString() + " odnalezionych pozycji";
             productsDataGrid.ItemsSource = products;
         }
 
@@ -113,10 +97,11 @@ namespace StoreManagementApp
 
     public class Product
     {
-        public string? id { get; set;}
+        public int? Id { get; set;}
         public string? Name { get; set;}
         public string? Category { get; set;}
-        public string? Amount { get; set;}
-        public string? Provider { get; set;}
+        public string? Producent { get; set;}
+        public int? Availability { get; set;}
+        public int? Price { get; set;}
     }
 }

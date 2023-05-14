@@ -142,7 +142,7 @@
                 </StackPanel>
 
                 <!-- Counter Title -->
-                <TextBlock Text="100 odnalezionych pozycji" Grid.Row="4" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                <TextBlock Name="foundPositions" Text="100 odnalezionych pozycji" Grid.Row="4" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <TextBlock Text="Znajdź" Grid.Row="4" FontSize="13" FontWeight="SemiBold" Margin="0 0 215 0" Foreground="#121518" HorizontalAlignment="Right" VerticalAlignment="Center" />
 
                 <!-- Filter Textbox -->
@@ -163,9 +163,9 @@
                             </DataGridCheckBoxColumn.HeaderTemplate>
                         </DataGridCheckBoxColumn>
 
-                        <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding id}"/>
+                        <DataGridTextColumn Header="Id" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
-                        <DataGridTemplateColumn Header="Nazwa" IsReadOnly="True" Width="*">
+                        <DataGridTemplateColumn Header="Nazwa" IsReadOnly="True" Width="200">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -176,9 +176,9 @@
                         </DataGridTemplateColumn>
 
                         <DataGridTextColumn Header="Kategoria" IsReadOnly="True" Width="*" Binding="{Binding Category}"/>
-                        <DataGridTextColumn Header="Producent" IsReadOnly="True" Width="*" Binding="{Binding Provider}"/>
-                        <DataGridTextColumn Header="Ilość" IsReadOnly="True" Width="*" Binding="{Binding Amount}"/>
-                        <DataGridTextColumn Header="Cena" IsReadOnly="True" Width="*" Binding="{Binding Provider}"/>
+                        <DataGridTextColumn Header="Producent" IsReadOnly="True" Width="*" Binding="{Binding Producent}"/>
+                        <DataGridTextColumn Header="Cena" IsReadOnly="True" Width="*" Binding="{Binding Price}"/>
+                        <DataGridTextColumn Header="Ilość" IsReadOnly="True" Width="*" Binding="{Binding Availability}"/>
 
                         <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                             <DataGridTemplateColumn.CellTemplate>
