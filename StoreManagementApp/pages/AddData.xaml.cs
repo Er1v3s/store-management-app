@@ -1,27 +1,66 @@
-﻿using StoreManagementApp.pages;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
+
 
 namespace StoreManagementApp.pages
 {
-    /// <summary>
-    /// Interaction logic for AddData.xaml
-    /// </summary>
-    public partial class AddData : Window
+    public partial class AddData : Window, IWindowManipulationMethods
     {
-        private List<IProductObserver> _productObservers = new List<IProductObserver>();
-
-        string databaseLocation = "Data Source=E:\\VisualStudio\\StoreManagementApp\\StoreManagementApp\\database\\StoreManagementApp.db";
+        private readonly List<IProductObserver> _productObservers = new();
         public AddData()
         {
             InitializeComponent();
             this.StateChanged += new EventHandler(Window_StateChanged);
+        }
+
+        private void AddDataToDB(object sender, RoutedEventArgs e)
+        {
+            using (SQLiteConnection dbconnection = new(DatabaseHelper.DatabasePath))
+            {
+                dbconnection.Open();
+
+                string sql = "INSERT INTO Product VALUES(@id_product, @name, @category, @producent, @price, @availability)";
+                SQLiteCommand command = new(sql, dbconnection);
+                command.Parameters.AddWithValue("@id_product", null);
+                command.Parameters.AddWithValue("@name", name.Text);
+                command.Parameters.AddWithValue("@category", category.Text);
+                command.Parameters.AddWithValue("@producent", producent.Text);
+                command.Parameters.AddWithValue("@price", price.Text);
+                command.Parameters.AddWithValue("@availability", availability.Text);
+                command.ExecuteNonQuery();
+
+                dbconnection.Close();
+            }
+
+            foreach (var observer in _productObservers)
+            {
+                observer.RefreshProductList();
+            }
+
+            Window.GetWindow(this).Close();
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !AreAllValidNumericChars(e.Text);
+        }
+
+        private static bool AreAllValidNumericChars(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+            return true;
+        }
+
+        public void Attach(IProductObserver observer)
+        {
+            _productObservers.Add(observer);
         }
 
         private void Window_StateChanged(object sender, EventArgs e)
@@ -43,22 +82,6 @@ namespace StoreManagementApp.pages
                 topBar.CornerRadius = new CornerRadius(5, 5, 0, 0);
             }
         }
-
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !AreAllValidNumericChars(e.Text);
-        }
-
-        private static bool AreAllValidNumericChars(string str)
-        {
-            foreach (char c in str)
-            {
-                if (c < '0' || c > '9')
-                    return false;
-            }
-            return true;
-        }
-
         private void DragWindow(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
@@ -67,36 +90,5 @@ namespace StoreManagementApp.pages
             }
         }
 
-        private void AddDataToDB(object sender, RoutedEventArgs e)
-        {
-            using (SQLiteConnection dbconnection = new SQLiteConnection(databaseLocation))
-            {
-                dbconnection.Open();
-
-                string sql = "INSERT INTO Product VALUES(@id_product, @name, @category, @producent, @price, @availability)";
-                SQLiteCommand command = new SQLiteCommand(sql, dbconnection);
-                command.Parameters.AddWithValue("@id_product", null);
-                command.Parameters.AddWithValue("@name", name.Text);
-                command.Parameters.AddWithValue("@category", category.Text);
-                command.Parameters.AddWithValue("@producent", producent.Text);
-                command.Parameters.AddWithValue("@price", price.Text);
-                command.Parameters.AddWithValue("@availability", availability.Text);
-                command.ExecuteNonQuery();
-
-                dbconnection.Close();
-            }
-
-            foreach (var observer in _productObservers)
-            {
-                observer.RefreshProductList();
-            }
-
-            Window.GetWindow(this).Close();
-        }
-
-        public void Attach(IProductObserver observer)
-        {
-            _productObservers.Add(observer);
-        }
     }
 }

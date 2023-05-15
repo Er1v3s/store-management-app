@@ -2,62 +2,36 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Xml.Linq;
 
 namespace StoreManagementApp
 {
-    public partial class MainWindow : Window, IProductObserver
+    public partial class MainWindow : Window, IProductObserver, IWindowManipulationMethods
     {
-        readonly static string databaseLocation = "Data Source=E:\\VisualStudio\\StoreManagementApp\\StoreManagementApp\\database\\StoreManagementApp.db";
-
-        public ObservableCollection<Product> products { get; set; }
+        public ObservableCollection<Product> Products { get; set; }
         public MainWindow()
         {
             InitializeComponent();
             this.StateChanged += new EventHandler(Window_StateChanged);
             var converter = new BrushConverter();
 
-            products = new ObservableCollection<Product>();
+            Products = new ObservableCollection<Product>();
             RefreshProductList();
-        }
-
-        private void ShowAddDataDialogBox(object sender, RoutedEventArgs e)
-        {
-            AddData AddDataWindow = new AddData();
-            AddDataWindow.Attach(this);
-            AddDataWindow.Show();
-        }
-
-        private void ShowUpdateDataDialogBox(int id, string name, string category, string producent, int price, int availability)
-        {
-            UpdateData updateDataWindow = new UpdateData(id, name, category, producent, price, availability);
-            updateDataWindow.Attach(this);
-            updateDataWindow.Show();
-        }
-
-        private void LogOut(object sender, RoutedEventArgs e)
-        {
-            Login loginWindow = new();
-            loginWindow.Show();
-
-            Window.GetWindow(this).Close();
         }
 
         public void RefreshProductList()
         {
-            products.Clear();
+            Products.Clear();
 
-            using (SQLiteConnection dbconnection = new SQLiteConnection(databaseLocation))
+            using (SQLiteConnection dbconnection = new(DatabaseHelper.DatabasePath))
             {
                 dbconnection.Open();
 
                 string sql = "SELECT * FROM Product";
 
-                SQLiteCommand command = new SQLiteCommand(sql, dbconnection);
+                SQLiteCommand command = new(sql, dbconnection);
                 using (SQLiteDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -69,7 +43,7 @@ namespace StoreManagementApp
                         int price = reader.GetInt32(4);
                         int availability = reader.GetInt32(5);
 
-                        products.Add(new Product { Id = Id, Name = name, Category = category, Producent = producent, Price = price, Availability = availability});
+                        Products.Add(new Product { Id = Id, Name = name, Category = category, Producent = producent, Price = price, Availability = availability });
 
                     }
                 }
@@ -77,8 +51,8 @@ namespace StoreManagementApp
                 dbconnection.Close();
             }
 
-            foundPositions.Text = products.Count.ToString() + " odnalezionych pozycji";
-            productsDataGrid.ItemsSource = products;
+            foundPositions.Text = Products.Count.ToString() + " odnalezionych pozycji";
+            productsDataGrid.ItemsSource = Products;
         }
 
         private void EditData(object sender, RoutedEventArgs e)
@@ -98,20 +72,40 @@ namespace StoreManagementApp
 
             if (selectedProduct != null)
             {
-                using (SQLiteConnection dbconnection = new SQLiteConnection(databaseLocation))
-                {
-                    dbconnection.Open();
+                using SQLiteConnection dbconnection = new(DatabaseHelper.DatabasePath);
+                dbconnection.Open();
 
-                    string sql = "DELETE FROM Product WHERE id_product=@id";
-                    SQLiteCommand command = new SQLiteCommand(sql, dbconnection);
-                    command.Parameters.AddWithValue("@id", selectedProduct.Id);
-                    command.ExecuteNonQuery();
+                string sql = "DELETE FROM Product WHERE id_product=@id";
+                SQLiteCommand command = new(sql, dbconnection);
+                command.Parameters.AddWithValue("@id", selectedProduct.Id);
+                command.ExecuteNonQuery();
 
-                    dbconnection.Close();
-                }
+                dbconnection.Close();
             }
 
             RefreshProductList();
+        }
+
+        private void ShowAddDataDialogBox(object sender, RoutedEventArgs e)
+        {
+            AddData AddDataWindow = new();
+            AddDataWindow.Attach(this);
+            AddDataWindow.Show();
+        }
+
+        private void ShowUpdateDataDialogBox(int id, string name, string category, string producent, int price, int availability)
+        {
+            UpdateData updateDataWindow = new(id, name, category, producent, price, availability);
+            updateDataWindow.Attach(this);
+            updateDataWindow.Show();
+        }
+
+        private void LogOut(object sender, RoutedEventArgs e)
+        {
+            Login loginWindow = new();
+            loginWindow.Show();
+
+            Window.GetWindow(this).Close();
         }
 
         private void Window_StateChanged(object sender, EventArgs e)

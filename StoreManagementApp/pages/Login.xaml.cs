@@ -1,14 +1,10 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 
 
 namespace StoreManagementApp.pages
 {
-    /// <summary>
-    /// Interaction logic for Login.xaml
-    /// </summary>
-    public partial class Login : Window
+    public partial class Login : Window, IWindowManipulationMethods
     {
         public Login()
         {
@@ -25,7 +21,7 @@ namespace StoreManagementApp.pages
 
         private void Move_To_MainWindow(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
+            MainWindow mainWindow = new();
             mainWindow.Show();
 
             Window.GetWindow(this).Close();
