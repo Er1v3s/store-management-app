@@ -104,6 +104,7 @@ namespace StoreManagementApp
 
         private void EditData(object sender, RoutedEventArgs e)
         {
+
             //using (SQLiteConnection dbconnection = new SQLiteConnection(databaseLocation))
             //{
             //    dbconnection.Open();
@@ -126,21 +127,25 @@ namespace StoreManagementApp
 
         private void DeleteData(object sender, RoutedEventArgs e)
         {
-            //int id = int.Parse();
 
-            //using (SQLiteConnection dbconnection = new SQLiteConnection(databaseLocation))
-            //{
-            //    dbconnection.Open();
+            Product selectedProduct = (Product)productsDataGrid.SelectedItem;
 
-            //    string sql = "DELETE FROM Product WHERE id_product=@id";
-            //    SQLiteCommand command = new SQLiteCommand(sql, dbconnection);
-            //    command.Parameters.AddWithValue("@id", id);
-            //    command.ExecuteNonQuery();
+            if (selectedProduct != null)
+            {
+                using (SQLiteConnection dbconnection = new SQLiteConnection(databaseLocation))
+                {
+                    dbconnection.Open();
 
-            //    dbconnection.Close();
-            //}
+                    string sql = "DELETE FROM Product WHERE id_product=@id";
+                    SQLiteCommand command = new SQLiteCommand(sql, dbconnection);
+                    command.Parameters.AddWithValue("@id", selectedProduct.Id);
+                    command.ExecuteNonQuery();
 
-            //LoadGrid();
+                    dbconnection.Close();
+                }
+            }
+
+            RefreshProductList();
         }
     }
 }
