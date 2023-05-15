@@ -1,6 +1,8 @@
 ﻿using StoreManagementApp.pages;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SQLite;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,6 +15,9 @@ namespace StoreManagementApp.pages
     /// </summary>
     public partial class AddData : Window
     {
+        private List<IProductObserver> _productObservers = new List<IProductObserver>();
+
+        string databaseLocation = "Data Source=E:\\VisualStudio\\StoreManagementApp\\StoreManagementApp\\database\\StoreManagementApp.db";
         public AddData()
         {
             InitializeComponent();
@@ -60,6 +65,38 @@ namespace StoreManagementApp.pages
             {
                 this.DragMove();
             }
+        }
+
+        private void AddDataToDB(object sender, RoutedEventArgs e)
+        {
+            using (SQLiteConnection dbconnection = new SQLiteConnection(databaseLocation))
+            {
+                dbconnection.Open();
+
+                string sql = "INSERT INTO Product VALUES(@id_product, @name, @category, @producent, @price, @availability)";
+                SQLiteCommand command = new SQLiteCommand(sql, dbconnection);
+                command.Parameters.AddWithValue("@id_product", null);
+                command.Parameters.AddWithValue("@name", name.Text);
+                command.Parameters.AddWithValue("@category", category.Text);
+                command.Parameters.AddWithValue("@producent", producent.Text);
+                command.Parameters.AddWithValue("@price", price.Text);
+                command.Parameters.AddWithValue("@availability", availability.Text);
+                command.ExecuteNonQuery();
+
+                dbconnection.Close();
+            }
+
+            foreach (var observer in _productObservers)
+            {
+                observer.RefreshProductList();
+            }
+
+            Window.GetWindow(this).Close();
+        }
+
+        public void Attach(IProductObserver observer)
+        {
+            _productObservers.Add(observer);
         }
     }
 }

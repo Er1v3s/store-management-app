@@ -1,54 +1,28 @@
 ﻿using StoreManagementApp.pages;
 using System;
 using System.Collections.ObjectModel;
+using System.Data.SQLite;
+using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Data.SQLite;
+using System.Xml.Linq;
 
 namespace StoreManagementApp
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IProductObserver
     {
+        readonly static string databaseLocation = "Data Source=E:\\VisualStudio\\StoreManagementApp\\StoreManagementApp\\database\\StoreManagementApp.db";
+
+        public ObservableCollection<Product> products { get; set; }
         public MainWindow()
         {
             InitializeComponent();
             this.StateChanged += new EventHandler(Window_StateChanged);
-
             var converter = new BrushConverter();
-            ObservableCollection<Product> products = new ObservableCollection<Product>();
 
-            string databaseLocation = "Data Source=E:\\VisualStudio\\StoreManagementApp\\StoreManagementApp\\database\\StoreManagementApp.db";
-
-            using (SQLiteConnection dbconnection = new SQLiteConnection(databaseLocation))
-            {
-                dbconnection.Open();
-
-                string sql = "SELECT * FROM Product";
-
-                SQLiteCommand command = new SQLiteCommand(sql, dbconnection);
-                using (SQLiteDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        int Id = reader.GetInt32(0);
-                        string name = reader.GetString(1);
-                        string category = reader.GetString(2);
-                        string producent = reader.GetString(3);
-                        int availability = reader.GetInt32(4);
-                        int price = reader.GetInt32(5);
-
-                        products.Add(new Product { Id = Id, Name = name, Category = category, Producent = producent, Availability = availability, Price = price});
-
-                    }
-                }
-
-                dbconnection.Close();
-            }
-
-            foundPositions.Text = products.Count.ToString() + " odnalezionych pozycji";
-            productsDataGrid.ItemsSource = products;
+            products = new ObservableCollection<Product>();
+            RefreshProductList();
         }
 
         private void Window_StateChanged(object sender, EventArgs e)
@@ -82,7 +56,7 @@ namespace StoreManagementApp
         private void Show_AddData_dialogBox(object sender, RoutedEventArgs e)
         {
             AddData AddDataWindow = new AddData();
-
+            AddDataWindow.Attach(this);
             AddDataWindow.Show();
         }
 
@@ -93,15 +67,80 @@ namespace StoreManagementApp
 
             Window.GetWindow(this).Close();
         }
-    }
 
-    public class Product
-    {
-        public int? Id { get; set;}
-        public string? Name { get; set;}
-        public string? Category { get; set;}
-        public string? Producent { get; set;}
-        public int? Availability { get; set;}
-        public int? Price { get; set;}
+        public void RefreshProductList()
+        {
+            products.Clear();
+
+            using (SQLiteConnection dbconnection = new SQLiteConnection(databaseLocation))
+            {
+                dbconnection.Open();
+
+                string sql = "SELECT * FROM Product";
+
+                SQLiteCommand command = new SQLiteCommand(sql, dbconnection);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int Id = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        string category = reader.GetString(2);
+                        string producent = reader.GetString(3);
+                        int availability = reader.GetInt32(4);
+                        int price = reader.GetInt32(5);
+
+                        products.Add(new Product { Id = Id, Name = name, Category = category, Producent = producent, Availability = availability, Price = price });
+
+                    }
+                }
+
+                dbconnection.Close();
+            }
+
+            foundPositions.Text = products.Count.ToString() + " odnalezionych pozycji";
+            productsDataGrid.ItemsSource = products;
+        }
+
+        private void EditData(object sender, RoutedEventArgs e)
+        {
+            //using (SQLiteConnection dbconnection = new SQLiteConnection(databaseLocation))
+            //{
+            //    dbconnection.Open();
+
+            //    string sql = "UPDATE Product SET name=@name, category=@category, producent=@producent, price=@price WHERE id=@id";
+            //    SQLiteCommand command = new SQLiteCommand(sql, dbconnection);
+            //    command.Parameters.AddWithValue("@id", null);
+            //    command.Parameters.AddWithValue("@name", name.Text);
+            //    command.Parameters.AddWithValue("@category", "coś fajnego");
+            //    command.Parameters.AddWithValue("@producent", "jakieś gówno");
+            //    command.Parameters.AddWithValue("@price", price.Text);
+            //    command.Parameters.AddWithValue("@availability", availability.Text);
+            //    command.ExecuteNonQuery();
+
+            //    dbconnection.Close();
+            //}
+
+            //LoadGrid();
+        }
+
+        private void DeleteData(object sender, RoutedEventArgs e)
+        {
+            //int id = int.Parse();
+
+            //using (SQLiteConnection dbconnection = new SQLiteConnection(databaseLocation))
+            //{
+            //    dbconnection.Open();
+
+            //    string sql = "DELETE FROM Product WHERE id_product=@id";
+            //    SQLiteCommand command = new SQLiteCommand(sql, dbconnection);
+            //    command.Parameters.AddWithValue("@id", id);
+            //    command.ExecuteNonQuery();
+
+            //    dbconnection.Close();
+            //}
+
+            //LoadGrid();
+        }
     }
 }
