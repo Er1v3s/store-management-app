@@ -25,39 +25,18 @@ namespace StoreManagementApp
             RefreshProductList();
         }
 
-        private void Window_StateChanged(object sender, EventArgs e)
-        {
-            double screenHeight = SystemParameters.PrimaryScreenHeight;
-            double taskbarHeight = SystemParameters.PrimaryScreenHeight - SystemParameters.WorkArea.Height - 7;
-
-            if (this.WindowState == WindowState.Maximized)
-            {
-                windowBorder.Margin = new Thickness(7, 7, 7, 0);
-                windowBorder.CornerRadius = new CornerRadius(0);
-                this.MaxHeight = screenHeight - taskbarHeight;
-                Leftbar.CornerRadius = new CornerRadius(0, 50, 0, 0);
-            }
-            else
-            {
-                windowBorder.Margin = new Thickness(0);
-                windowBorder.CornerRadius = new CornerRadius(10);
-                Leftbar.CornerRadius = new CornerRadius(0, 50, 0, 10);
-            }
-        }
-
-        private void DragWindow(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                this.DragMove();
-            }
-        }
-
-        private void Show_AddData_dialogBox(object sender, RoutedEventArgs e)
+        private void ShowAddDataDialogBox(object sender, RoutedEventArgs e)
         {
             AddData AddDataWindow = new AddData();
             AddDataWindow.Attach(this);
             AddDataWindow.Show();
+        }
+
+        private void ShowUpdateDataDialogBox(int id, string name, string category, string producent, int price, int availability)
+        {
+            UpdateData updateDataWindow = new UpdateData(id, name, category, producent, price, availability);
+            updateDataWindow.Attach(this);
+            updateDataWindow.Show();
         }
 
         private void LogOut(object sender, RoutedEventArgs e)
@@ -87,10 +66,10 @@ namespace StoreManagementApp
                         string name = reader.GetString(1);
                         string category = reader.GetString(2);
                         string producent = reader.GetString(3);
-                        int availability = reader.GetInt32(4);
-                        int price = reader.GetInt32(5);
+                        int price = reader.GetInt32(4);
+                        int availability = reader.GetInt32(5);
 
-                        products.Add(new Product { Id = Id, Name = name, Category = category, Producent = producent, Availability = availability, Price = price });
+                        products.Add(new Product { Id = Id, Name = name, Category = category, Producent = producent, Price = price, Availability = availability});
 
                     }
                 }
@@ -104,25 +83,12 @@ namespace StoreManagementApp
 
         private void EditData(object sender, RoutedEventArgs e)
         {
+            Product selectedProduct = (Product)productsDataGrid.SelectedItem;
 
-            //using (SQLiteConnection dbconnection = new SQLiteConnection(databaseLocation))
-            //{
-            //    dbconnection.Open();
-
-            //    string sql = "UPDATE Product SET name=@name, category=@category, producent=@producent, price=@price WHERE id=@id";
-            //    SQLiteCommand command = new SQLiteCommand(sql, dbconnection);
-            //    command.Parameters.AddWithValue("@id", null);
-            //    command.Parameters.AddWithValue("@name", name.Text);
-            //    command.Parameters.AddWithValue("@category", "coś fajnego");
-            //    command.Parameters.AddWithValue("@producent", "jakieś gówno");
-            //    command.Parameters.AddWithValue("@price", price.Text);
-            //    command.Parameters.AddWithValue("@availability", availability.Text);
-            //    command.ExecuteNonQuery();
-
-            //    dbconnection.Close();
-            //}
-
-            //LoadGrid();
+            if (selectedProduct != null)
+            {
+                ShowUpdateDataDialogBox(selectedProduct.Id, selectedProduct.Name, selectedProduct.Category, selectedProduct.Producent, selectedProduct.Price, selectedProduct.Availability);
+            }
         }
 
         private void DeleteData(object sender, RoutedEventArgs e)
@@ -146,6 +112,34 @@ namespace StoreManagementApp
             }
 
             RefreshProductList();
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            double taskbarHeight = SystemParameters.PrimaryScreenHeight - SystemParameters.WorkArea.Height - 7;
+
+            if (this.WindowState == WindowState.Maximized)
+            {
+                windowBorder.Margin = new Thickness(7, 7, 7, 0);
+                windowBorder.CornerRadius = new CornerRadius(0);
+                this.MaxHeight = screenHeight - taskbarHeight;
+                Leftbar.CornerRadius = new CornerRadius(0, 50, 0, 0);
+            }
+            else
+            {
+                windowBorder.Margin = new Thickness(0);
+                windowBorder.CornerRadius = new CornerRadius(10);
+                Leftbar.CornerRadius = new CornerRadius(0, 50, 0, 10);
+            }
+        }
+
+        private void DragWindow(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
         }
     }
 }
