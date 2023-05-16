@@ -16,6 +16,7 @@ namespace StoreManagementApp.pages
         {
             InitializeComponent();
             this.StateChanged += new EventHandler(Window_StateChanged);
+            this.KeyDown += HandleEnterKey;
 
             UpdateData.Id = id;
             update_name.Text = name;
@@ -50,6 +51,14 @@ namespace StoreManagementApp.pages
             }
 
             Window.GetWindow(this).Close();
+        }
+
+        private void HandleEnterKey(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                EditDataInDB(sender, e);
+            }
         }
 
         public void Attach(IProductObserver observer)

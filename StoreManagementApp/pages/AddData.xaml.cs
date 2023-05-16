@@ -14,6 +14,7 @@ namespace StoreManagementApp.pages
         {
             InitializeComponent();
             this.StateChanged += new EventHandler(Window_StateChanged);
+            this.KeyDown += HandleEnterKey;
         }
 
         private void AddDataToDB(object sender, RoutedEventArgs e)
@@ -43,6 +44,19 @@ namespace StoreManagementApp.pages
             Window.GetWindow(this).Close();
         }
 
+        private void HandleEnterKey(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                AddDataToDB(sender, e);
+            }
+        }
+
+        public void Attach(IProductObserver observer)
+        {
+            _productObservers.Add(observer);
+        }
+
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !AreAllValidNumericChars(e.Text);
@@ -56,11 +70,6 @@ namespace StoreManagementApp.pages
                     return false;
             }
             return true;
-        }
-
-        public void Attach(IProductObserver observer)
-        {
-            _productObservers.Add(observer);
         }
 
         private void Window_StateChanged(object sender, EventArgs e)

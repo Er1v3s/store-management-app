@@ -59,16 +59,16 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200" Margin="0 0 20 0">
-                    <TextBox Height="25" FontSize="16"/>
+                    <TextBox x:Name="employee_login" Height="25" FontSize="16"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="200" Margin="0 0 20 0">
-                    <TextBox Height="25" FontSize="16"/>
+                    <PasswordBox x:Name="employee_password" Height="25" FontSize="16"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
 
-                    <Button Style="{StaticResource addButton}" Click="Move_To_MainWindow">
+                    <Button x:Name="login_button" Style="{StaticResource addButton}" Click="MoveToMainWindow">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Zaloguj się" FontSize="16"/>
                         </StackPanel>

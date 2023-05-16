@@ -11,11 +11,13 @@ namespace StoreManagementApp
     public partial class MainWindow : Window, IProductObserver, IWindowManipulationMethods
     {
         public ObservableCollection<Product> Products { get; set; }
-        public MainWindow()
+        public MainWindow(string employee)
         {
             InitializeComponent();
             this.StateChanged += new EventHandler(Window_StateChanged);
             var converter = new BrushConverter();
+
+            employee_name.Text = employee;
 
             Products = new ObservableCollection<Product>();
             RefreshProductList();

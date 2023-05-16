@@ -104,7 +104,7 @@
                             </StackPanel>
                         </Button>
 
-                        <TextBlock Text="Andrzej Kowalski" Foreground="#fff" FontSize="14" FontWeight="SemiBold" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 20" />
+                        <TextBlock x:Name="employee_name" Text="" Foreground="#fff" FontSize="14" FontWeight="SemiBold" TextAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 20" />
                     </DockPanel>
                 </Border>
             </Grid>
