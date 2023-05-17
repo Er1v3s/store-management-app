@@ -9,7 +9,7 @@ namespace StoreManagementApp.pages
 {
     public partial class AddData : Window, IWindowManipulationMethods
     {
-        private readonly List<IProductObserver> _productObservers = new();
+        private readonly List<IObserver> _productObservers = new();
         public AddData()
         {
             InitializeComponent();
@@ -38,7 +38,7 @@ namespace StoreManagementApp.pages
 
             foreach (var observer in _productObservers)
             {
-                observer.RefreshProductList();
+                observer.RefreshItemsList();
             }
 
             Window.GetWindow(this).Close();
@@ -52,7 +52,7 @@ namespace StoreManagementApp.pages
             }
         }
 
-        public void Attach(IProductObserver observer)
+        public void Attach(IObserver observer)
         {
             _productObservers.Add(observer);
         }

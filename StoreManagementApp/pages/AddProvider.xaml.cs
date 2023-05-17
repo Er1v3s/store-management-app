@@ -1,51 +1,41 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.SQLite;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
-using System.Data.SQLite;
-using System.Collections.Generic;
 
 namespace StoreManagementApp.pages
 {
-    public partial class UpdateData : Window, IWindowManipulationMethods
+    public partial class AddProvider : Window, IWindowManipulationMethods
     {
-        private readonly List<IObserver> _productObservers = new();
-
-        private static int Id { get; set; }
-
-        public UpdateData(int id, string name, string category, string producent, int price, int availability)
+        private readonly List<IObserver> _providerObservers = new();
+        public AddProvider()
         {
             InitializeComponent();
             this.StateChanged += new EventHandler(Window_StateChanged);
             this.KeyDown += HandleEnterKey;
-
-            UpdateData.Id = id;
-            update_name.Text = name;
-            update_category.Text = category;
-            update_producent.Text = producent;
-            update_price.Text = price.ToString();
-            update_availability.Text = availability.ToString();
         }
 
-        private void EditDataInDB(object sender, EventArgs e)
+        private void AddProviderToDB(object sender, RoutedEventArgs e)
         {
             using (SQLiteConnection dbconnection = new(DatabaseHelper.DatabasePath))
             {
                 dbconnection.Open();
 
-                string sql = "UPDATE Product SET name=@name, category=@category, producent=@producent, price=@price, availability=@availability WHERE id_product=@id";
+                string sql = "INSERT INTO Provider VALUES(@id, @name, @www, @phone_number, @email)";
                 SQLiteCommand command = new(sql, dbconnection);
-                command.Parameters.AddWithValue("@id", UpdateData.Id);
-                command.Parameters.AddWithValue("@name", update_name.Text);
-                command.Parameters.AddWithValue("@category", update_category.Text);
-                command.Parameters.AddWithValue("@producent", update_producent.Text);
-                command.Parameters.AddWithValue("@availability", update_availability.Text);
-                command.Parameters.AddWithValue("@price", update_price.Text);
+                command.Parameters.AddWithValue("@id", null);
+                command.Parameters.AddWithValue("@name", name.Text);
+                command.Parameters.AddWithValue("@www", www.Text);
+                command.Parameters.AddWithValue("@phone_number", phone.Text);
+                command.Parameters.AddWithValue("@email", email.Text);
                 command.ExecuteNonQuery();
 
                 dbconnection.Close();
             }
 
-            foreach (var observer in _productObservers)
+            foreach (var observer in _providerObservers)
             {
                 observer.RefreshItemsList();
             }
@@ -53,17 +43,17 @@ namespace StoreManagementApp.pages
             Window.GetWindow(this).Close();
         }
 
+        public void Attach(IObserver observer)
+        {
+            _providerObservers.Add(observer);
+        }
+
         private void HandleEnterKey(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                EditDataInDB(sender, e);
+                AddProviderToDB(sender, e);
             }
-        }
-
-        public void Attach(IObserver observer)
-        {
-            _productObservers.Add(observer);
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

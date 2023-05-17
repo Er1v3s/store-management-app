@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace StoreManagementApp.UserControls
 {
-    public partial class ProductsView : UserControl, IProductObserver
+    public partial class ProductsView : UserControl, IObserver
     {
         public ObservableCollection<Product> Products { get; set; }
         public ProductsView()
@@ -16,10 +16,10 @@ namespace StoreManagementApp.UserControls
             InitializeComponent();
 
             Products = new ObservableCollection<Product>();
-            RefreshProductList();
+            RefreshItemsList();
         }
 
-        public void RefreshProductList()
+        public void RefreshItemsList()
         {
             Products.Clear();
 
@@ -81,7 +81,7 @@ namespace StoreManagementApp.UserControls
                 dbconnection.Close();
             }
 
-            RefreshProductList();
+            RefreshItemsList();
         }
 
         private void ShowAddDataDialogBox(object sender, RoutedEventArgs e)

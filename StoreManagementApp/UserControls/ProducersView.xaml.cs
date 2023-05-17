@@ -1,11 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using StoreManagementApp.pages;
+using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Windows.Controls;
 
 
 namespace StoreManagementApp.UserControls
 {
-    public partial class ProducersView : UserControl
+    public partial class ProducersView : UserControl, IObserver
     {
         public ObservableCollection<Producer> Producers { get; set; }
         public ProducersView()
@@ -13,10 +14,10 @@ namespace StoreManagementApp.UserControls
             InitializeComponent();
             Producers = new ObservableCollection<Producer>();
 
-            RefreshProducersList();
+            RefreshItemsList();
         }
 
-        public void RefreshProducersList()
+        public void RefreshItemsList()
         {
             Producers.Clear();
 
@@ -48,6 +49,13 @@ namespace StoreManagementApp.UserControls
 
             foundPositions.Text = Producers.Count.ToString() + " odnalezionych pozycji";
             productsDataGrid.ItemsSource = Producers;
+        }
+
+        private void ShowAddProducerDialogBox(object sender, System.Windows.RoutedEventArgs e)
+        {
+            AddProducer AddProducerWindow = new();
+            AddProducerWindow.Attach(this);
+            AddProducerWindow.Show();
         }
     }
 }
