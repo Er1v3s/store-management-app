@@ -1,4 +1,5 @@
 ﻿using StoreManagementApp.pages;
+using StoreManagementApp.UserControls;
 using System;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
@@ -14,6 +15,7 @@ namespace StoreManagementApp
         public MainWindow(string employee)
         {
             InitializeComponent();
+            CC.Content = new HomePageView();
             this.StateChanged += new EventHandler(Window_StateChanged);
 
             employee_name.Text = employee;
@@ -53,6 +55,26 @@ namespace StoreManagementApp
             {
                 this.DragMove();
             }
+        }
+
+        private void NavButtonProducts_Click(object sender, RoutedEventArgs e)
+        {
+            CC.Content = new ProductsView();
+        }
+
+        private void NavButtonHomePage_Click(object sender, RoutedEventArgs e)
+        {
+            CC.Content = new HomePageView();
+        }
+
+        private void NavButtonProviders_Click(object sender, RoutedEventArgs e)
+        {
+            CC.Content = new ProvidersView();
+        }
+
+        private void NavButtonProducers_Click(object sender, RoutedEventArgs e)
+        {
+            CC.Content = new ProducersView();
         }
     }
 }

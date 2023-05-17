@@ -49,7 +49,7 @@
 
                         <!-- Menu Buttons -->
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}">
+                            <Button Style="{StaticResource menuButton}" x:Name="NavButtonHomePage" Click="NavButtonHomePage_Click">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="HomeVariant" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Strona główna" />
@@ -58,7 +58,7 @@
                         </StackPanel>
 
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}">
+                            <Button Style="{StaticResource menuButton}" x:Name="NavButtonProducts" Click="NavButtonProducts_Click">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="PackageVariant" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Produkty" />
@@ -67,7 +67,7 @@
                         </StackPanel>
 
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}">
+                            <Button Style="{StaticResource menuButton}" x:Name="NavButtonProviders" Click="NavButtonProviders_Click">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="TruckDelivery" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Dostawcy" />
@@ -76,19 +76,10 @@
                         </StackPanel>
 
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}">
+                            <Button Style="{StaticResource menuButton}" x:Name="NavButtonProducers" Click="NavButtonProducers_Click">
                                 <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="Receipt" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Faktury" />
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
-
-                        <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="ChartBar" Style="{StaticResource menuButtonIcon}"/>
-                                    <TextBlock Text="Raporty" />
+                                    <Icon:PackIconMaterial Kind="Anvil" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Producenci" />
                                 </StackPanel>
                             </Button>
                         </StackPanel>
@@ -106,9 +97,7 @@
             </Grid>
 
             <!-- Main Section -->
-            <Grid Grid.Column="1" Grid.Row="1" Margin="30 0 20 20" Grid.RowSpan="2">
-                <UserControl:ProductsView/>
-            </Grid>
+            <ContentControl x:Name="CC"  Grid.Column="1" Grid.Row="1" Margin="30 0 20 20" Grid.RowSpan="2" />
 
         </Grid>
     </Border>
