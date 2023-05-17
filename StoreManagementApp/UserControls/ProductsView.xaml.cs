@@ -14,7 +14,6 @@ namespace StoreManagementApp.UserControls
         public ProductsView()
         {
             InitializeComponent();
-            var converter = new BrushConverter();
 
             Products = new ObservableCollection<Product>();
             RefreshProductList();

@@ -48,7 +48,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
-                <DataGridTemplateColumn Header="Nazwa" IsReadOnly="True" Width="200">
+                <DataGridTemplateColumn Header="Nazwa" IsReadOnly="True" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -58,10 +58,9 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Header="Kategoria" IsReadOnly="True" Width="*" Binding="{Binding Category}"/>
-                <DataGridTextColumn Header="Producent" IsReadOnly="True" Width="*" Binding="{Binding Producent}"/>
-                <DataGridTextColumn Header="Cena" IsReadOnly="True" Width="*" Binding="{Binding Price}"/>
-                <DataGridTextColumn Header="Ilość" IsReadOnly="True" Width="*" Binding="{Binding Availability}"/>
+                <DataGridTextColumn Header="www" IsReadOnly="True" Width="*" Binding="{Binding Www}"/>
+                <DataGridTextColumn Header="Telefon" IsReadOnly="True" Width="*" Binding="{Binding PhoneNumber}"/>
+                <DataGridTextColumn Header="E-mail" IsReadOnly="True" Width="*" Binding="{Binding Email}"/>
 
                 <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
