@@ -43,8 +43,8 @@
             <TextBox x:Name="txtFilter" Style="{StaticResource textboxSearch}" Panel.ZIndex="2" Margin="15,0,0,0"/>
         </Grid>
 
-        <!-- Products Datagrid -->
-        <DataGrid x:Name="productsDataGrid" Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="5">
+        <!-- Producers Datagrid -->
+        <DataGrid x:Name="producersDataGrid" Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="5">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" IsReadOnly="True" CanUserResize="False" Width="50" Binding="{Binding Id}"/>
 
@@ -70,7 +70,7 @@
                                 <Button Style="{StaticResource gridEditButton}">
                                     <Icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
                                 </Button>
-                                <Button Style="{StaticResource gridRemoveButton}" Margin="5 0 0 0">
+                                <Button Style="{StaticResource gridRemoveButton}" Margin="5 0 0 0" Click="DeleteProducer">
                                     <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
                                 </Button>
                             </StackPanel>

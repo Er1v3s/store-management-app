@@ -1,6 +1,7 @@
 ﻿using StoreManagementApp.pages;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
+using System.Windows;
 using System.Windows.Controls;
 
 
@@ -47,7 +48,28 @@ namespace StoreManagementApp.UserControls
             }
 
             foundPositions.Text = Providers.Count.ToString() + " odnalezionych pozycji";
-            productsDataGrid.ItemsSource = Providers;
+            providersDataGrid.ItemsSource = Providers;
+        }
+
+        private void DeleteProvider(object sender, RoutedEventArgs e)
+        {
+
+            Provider selectedItem = (Provider)providersDataGrid.SelectedItem;
+
+            if (selectedItem != null)
+            {
+                using SQLiteConnection dbconnection = new(DatabaseHelper.DatabasePath);
+                dbconnection.Open();
+
+                string sql = "DELETE FROM Provider WHERE id=@id";
+                SQLiteCommand command = new(sql, dbconnection);
+                command.Parameters.AddWithValue("@id", selectedItem.Id);
+                command.ExecuteNonQuery();
+
+                dbconnection.Close();
+            }
+
+            RefreshItemsList();
         }
 
         private void ShowAddProviderDialogBox(object sender, System.Windows.RoutedEventArgs e)
