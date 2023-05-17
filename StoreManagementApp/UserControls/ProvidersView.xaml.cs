@@ -51,6 +51,16 @@ namespace StoreManagementApp.UserControls
             providersDataGrid.ItemsSource = Providers;
         }
 
+        private void EditProvider(object sender, RoutedEventArgs e)
+        {
+            Provider selectedItem = (Provider)providersDataGrid.SelectedItem;
+
+            if (selectedItem != null)
+            {
+                ShowUpdateProviderDialogBox(selectedItem.Id, selectedItem.Name, selectedItem.Www, selectedItem.PhoneNumber, selectedItem.Email);
+            }
+        }
+
         private void DeleteProvider(object sender, RoutedEventArgs e)
         {
 
@@ -72,11 +82,18 @@ namespace StoreManagementApp.UserControls
             RefreshItemsList();
         }
 
-        private void ShowAddProviderDialogBox(object sender, System.Windows.RoutedEventArgs e)
+        private void ShowAddProviderDialogBox(object sender, RoutedEventArgs e)
         {
             AddProvider AddProviderWindow = new();
             AddProviderWindow.Attach(this);
             AddProviderWindow.Show();
+        }
+
+        private void ShowUpdateProviderDialogBox(int id, string name, string www, int phone, string email)
+        {
+            UpdateProvider updateProviderWindow = new(id, name, www, phone, email);
+            updateProviderWindow.Attach(this);
+            updateProviderWindow.Show();
         }
     }
 }

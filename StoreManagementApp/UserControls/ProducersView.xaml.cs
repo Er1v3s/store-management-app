@@ -52,6 +52,16 @@ namespace StoreManagementApp.UserControls
             producersDataGrid.ItemsSource = Producers;
         }
 
+        private void EditProducer(object sender, RoutedEventArgs e)
+        {
+            Producer selectedItem = (Producer)producersDataGrid.SelectedItem;
+
+            if (selectedItem != null)
+            {
+                ShowUpdateProducerDialogBox(selectedItem.Id, selectedItem.Name, selectedItem.Www, selectedItem.Tin, selectedItem.PhoneNumber, selectedItem.Email);
+            }
+        }
+
         private void DeleteProducer(object sender, RoutedEventArgs e)
         {
 
@@ -73,11 +83,18 @@ namespace StoreManagementApp.UserControls
             RefreshItemsList();
         }
 
-        private void ShowAddProducerDialogBox(object sender, System.Windows.RoutedEventArgs e)
+        private void ShowAddProducerDialogBox(object sender, RoutedEventArgs e)
         {
             AddProducer AddProducerWindow = new();
             AddProducerWindow.Attach(this);
             AddProducerWindow.Show();
+        }
+
+        private void ShowUpdateProducerDialogBox(int id, string name, string www, int tin, int phone, string email)
+        {
+            UpdateProducer updateProducerWindow = new(id, name, www, tin, phone, email);
+            updateProducerWindow.Attach(this);
+            updateProducerWindow.Show();
         }
     }
 }
