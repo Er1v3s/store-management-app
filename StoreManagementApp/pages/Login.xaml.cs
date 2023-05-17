@@ -12,6 +12,7 @@ namespace StoreManagementApp.pages
         public Login()
         {
             InitializeComponent();
+            this.StateChanged += new EventHandler(Window_StateChanged);
             this.KeyDown += HandleEnterKey;
         }
 
@@ -77,6 +78,25 @@ namespace StoreManagementApp.pages
             }
         }
 
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            double taskbarHeight = SystemParameters.PrimaryScreenHeight - SystemParameters.WorkArea.Height - 7;
+
+            if (this.WindowState == WindowState.Maximized)
+            {
+                windowBorder.Margin = new Thickness(7, 7, 7, 0);
+                windowBorder.CornerRadius = new CornerRadius(0);
+                this.MaxHeight = screenHeight - taskbarHeight;
+                topBar.CornerRadius = new CornerRadius(0);
+            }
+            else
+            {
+                windowBorder.Margin = new Thickness(0);
+                windowBorder.CornerRadius = new CornerRadius(10);
+                topBar.CornerRadius = new CornerRadius(5, 5, 0, 0);
+            }
+        }
         private void DragWindow(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)

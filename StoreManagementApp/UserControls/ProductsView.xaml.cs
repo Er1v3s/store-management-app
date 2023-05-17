@@ -1,4 +1,5 @@
 ﻿using StoreManagementApp.pages;
+using StoreManagementApp.types;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Windows;
@@ -121,6 +122,7 @@ namespace StoreManagementApp.UserControls
         {
             Search(txtFilter.Text);
         }
+
         private void ShowAddDataDialogBox(object sender, RoutedEventArgs e)
         {
             AddData AddDataWindow = new();

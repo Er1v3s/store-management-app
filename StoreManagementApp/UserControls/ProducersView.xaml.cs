@@ -1,4 +1,5 @@
 ﻿using StoreManagementApp.pages;
+using StoreManagementApp.types;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Windows;
