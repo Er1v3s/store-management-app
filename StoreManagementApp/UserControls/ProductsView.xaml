@@ -34,13 +34,14 @@
 
         <!-- Counter Title -->
         <TextBlock Name="foundPositions" Text="0 odnalezionych pozycji" Grid.Row="4" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center" />
+
         <TextBlock Text="Znajdź" Grid.Row="4" FontSize="13" FontWeight="SemiBold" Margin="0 0 215 0" Foreground="#121518" HorizontalAlignment="Right" VerticalAlignment="Center" />
 
         <!-- Filter Textbox -->
         <Grid Width="200" HorizontalAlignment="Right" Grid.Row="4">
             <Icon:PackIconMaterial Kind="Magnify" Style="{StaticResource menuButtonIcon}" Panel.ZIndex="3" Margin="5"/>
             <TextBox Style="{StaticResource textboxSearch}" Panel.ZIndex="1" IsEnabled="False"/>
-            <TextBox x:Name="txtFilter" Style="{StaticResource textboxSearch}" Panel.ZIndex="2" Margin="15,0,0,0"/>
+            <TextBox x:Name="txtFilter" Style="{StaticResource textboxSearch}" Panel.ZIndex="2" Margin="15,0,0,0" TextChanged="TxtFilter_TextChanged"/>
         </Grid>
 
         <!-- Products Datagrid -->

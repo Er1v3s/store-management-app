@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Input;
 
 namespace StoreManagementApp.UserControls
 {
@@ -80,6 +80,45 @@ namespace StoreManagementApp.UserControls
             }
 
             RefreshItemsList();
+        }
+
+        private void Search(string userInput)
+        {
+            Providers.Clear();
+
+            using (SQLiteConnection dbconnection = new(DatabaseHelper.DatabasePath))
+            {
+                dbconnection.Open();
+
+                string sql = "SELECT * FROM Provider WHERE name LIKE '%' || @userInput || '%' OR www LIKE '%' || @userInput || '%' OR phone_number LIKE '%' || @userInput || '%' OR email LIKE '%' || @userInput || '%'";
+
+                SQLiteCommand command = new(sql, dbconnection);
+                command.Parameters.AddWithValue("@userInput", userInput);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        string www = reader.GetString(2);
+                        int phoneNumber = reader.GetInt32(3);
+                        string email = reader.GetString(4);
+
+                        Providers.Add(new Provider { Id = id, Name = name, Www = www, PhoneNumber = phoneNumber, Email = email });
+
+                    }
+                }
+
+                dbconnection.Close();
+            }
+
+            foundPositions.Text = Providers.Count.ToString() + " odnalezionych pozycji";
+            providersDataGrid.ItemsSource = Providers;
+        }
+
+        private void TxtFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Search(txtFilter.Text);
         }
 
         private void ShowAddProviderDialogBox(object sender, RoutedEventArgs e)
