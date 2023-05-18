@@ -8,18 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="images\user.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
+    <PackageReference Include="OxyPlot.Wpf" Version="2.1.2" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="images\user.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
 </Project>

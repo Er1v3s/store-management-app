@@ -1,29 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Windows;
 using System.Windows.Input;
-
+using System.Data.SQLite;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace StoreManagementApp.pages
 {
-    public partial class AddData : Window, IWindowManipulationMethods
+    public partial class UpdateProducer : Window, IWindowManipulationMethods
     {
-        private readonly List<IObserver> _productObservers = new();
-        public AddData()
+        private readonly List<IObserver> _producerObservers = new();
+
+        private static int Id { get; set; }
+
+        public UpdateProducer(int id, string name, string www, int tin, int phone, string email)
         {
             InitializeComponent();
             this.StateChanged += new EventHandler(Window_StateChanged);
             this.KeyDown += HandleEnterKey;
+
+            UpdateProducer.Id = id;
+            update_name.Text = name;
+            update_www.Text = www;
+            update_tin.Text = tin.ToString();
+            update_phone.Text = phone.ToString();
+            update_email.Text = email;
         }
 
-        private void AddDataToDB(object sender, RoutedEventArgs e)
+        private void EditProducerInDB(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(name.Text) ||
-                string.IsNullOrWhiteSpace(category.Text) ||
-                string.IsNullOrWhiteSpace(producent.Text) ||
-                string.IsNullOrWhiteSpace(price.Text) ||
-                string.IsNullOrWhiteSpace(availability.Text))
+            if (string.IsNullOrWhiteSpace(update_name.Text) ||
+                string.IsNullOrWhiteSpace(update_www.Text) ||
+                string.IsNullOrWhiteSpace(update_tin.Text) ||
+                string.IsNullOrWhiteSpace(update_phone.Text) ||
+                string.IsNullOrWhiteSpace(update_email.Text))
             {
                 MessageBox.Show("Wszystkie pola muszą być wypełnione.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -33,20 +44,20 @@ namespace StoreManagementApp.pages
             {
                 dbconnection.Open();
 
-                string sql = "INSERT INTO Product VALUES(@id_product, @name, @category, @producent, @price, @availability)";
+                string sql = "UPDATE Producer SET name=@name, www=@www, tin=@tin, phone_number=@phone, email=@email WHERE id=@id";
                 SQLiteCommand command = new(sql, dbconnection);
-                command.Parameters.AddWithValue("@id_product", null);
-                command.Parameters.AddWithValue("@name", name.Text);
-                command.Parameters.AddWithValue("@category", category.Text);
-                command.Parameters.AddWithValue("@producent", producent.Text);
-                command.Parameters.AddWithValue("@price", price.Text);
-                command.Parameters.AddWithValue("@availability", availability.Text);
+                command.Parameters.AddWithValue("@id", UpdateProducer.Id);
+                command.Parameters.AddWithValue("@name", update_name.Text);
+                command.Parameters.AddWithValue("@www", update_www.Text);
+                command.Parameters.AddWithValue("@tin", update_tin.Text);
+                command.Parameters.AddWithValue("@phone", update_phone.Text);
+                command.Parameters.AddWithValue("@email", update_email.Text);
                 command.ExecuteNonQuery();
 
                 dbconnection.Close();
             }
 
-            foreach (var observer in _productObservers)
+            foreach (var observer in _producerObservers)
             {
                 observer.RefreshItemsList();
             }
@@ -58,13 +69,13 @@ namespace StoreManagementApp.pages
         {
             if (e.Key == Key.Enter)
             {
-                AddDataToDB(sender, e);
+                EditProducerInDB(sender, e);
             }
         }
 
         public void Attach(IObserver observer)
         {
-            _productObservers.Add(observer);
+            _producerObservers.Add(observer);
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -108,6 +119,5 @@ namespace StoreManagementApp.pages
                 this.DragMove();
             }
         }
-
     }
 }

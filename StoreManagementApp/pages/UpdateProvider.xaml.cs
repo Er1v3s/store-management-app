@@ -1,29 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Windows;
 using System.Windows.Input;
-
+using System.Data.SQLite;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace StoreManagementApp.pages
 {
-    public partial class AddData : Window, IWindowManipulationMethods
+    public partial class UpdateProvider : Window, IWindowManipulationMethods
     {
-        private readonly List<IObserver> _productObservers = new();
-        public AddData()
+        private readonly List<IObserver> _providerObservers = new();
+
+        private static int Id { get; set; }
+
+        public UpdateProvider(int id, string name, string www, int phone, string email)
         {
             InitializeComponent();
             this.StateChanged += new EventHandler(Window_StateChanged);
             this.KeyDown += HandleEnterKey;
+
+            UpdateProvider.Id = id;
+            update_name.Text = name;
+            update_www.Text = www;
+            update_phone.Text = phone.ToString();
+            update_email.Text = email;
         }
 
-        private void AddDataToDB(object sender, RoutedEventArgs e)
+        private void EditProviderInDB(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(name.Text) ||
-                string.IsNullOrWhiteSpace(category.Text) ||
-                string.IsNullOrWhiteSpace(producent.Text) ||
-                string.IsNullOrWhiteSpace(price.Text) ||
-                string.IsNullOrWhiteSpace(availability.Text))
+            if (string.IsNullOrWhiteSpace(update_name.Text) ||
+                string.IsNullOrWhiteSpace(update_www.Text) ||
+                string.IsNullOrWhiteSpace(update_phone.Text) ||
+                string.IsNullOrWhiteSpace(update_email.Text))
             {
                 MessageBox.Show("Wszystkie pola muszą być wypełnione.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -33,20 +42,19 @@ namespace StoreManagementApp.pages
             {
                 dbconnection.Open();
 
-                string sql = "INSERT INTO Product VALUES(@id_product, @name, @category, @producent, @price, @availability)";
+                string sql = "UPDATE Provider SET name=@name, www=@www, phone_number=@phone, email=@email WHERE id=@id";
                 SQLiteCommand command = new(sql, dbconnection);
-                command.Parameters.AddWithValue("@id_product", null);
-                command.Parameters.AddWithValue("@name", name.Text);
-                command.Parameters.AddWithValue("@category", category.Text);
-                command.Parameters.AddWithValue("@producent", producent.Text);
-                command.Parameters.AddWithValue("@price", price.Text);
-                command.Parameters.AddWithValue("@availability", availability.Text);
+                command.Parameters.AddWithValue("@id", UpdateProvider.Id);
+                command.Parameters.AddWithValue("@name", update_name.Text);
+                command.Parameters.AddWithValue("@www", update_www.Text);
+                command.Parameters.AddWithValue("@phone", update_phone.Text);
+                command.Parameters.AddWithValue("@email", update_email.Text);
                 command.ExecuteNonQuery();
 
                 dbconnection.Close();
             }
 
-            foreach (var observer in _productObservers)
+            foreach (var observer in _providerObservers)
             {
                 observer.RefreshItemsList();
             }
@@ -58,13 +66,13 @@ namespace StoreManagementApp.pages
         {
             if (e.Key == Key.Enter)
             {
-                AddDataToDB(sender, e);
+                EditProviderInDB(sender, e);
             }
         }
 
         public void Attach(IObserver observer)
         {
-            _productObservers.Add(observer);
+            _providerObservers.Add(observer);
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -108,6 +116,5 @@ namespace StoreManagementApp.pages
                 this.DragMove();
             }
         }
-
     }
 }

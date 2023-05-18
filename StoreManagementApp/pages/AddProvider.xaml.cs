@@ -4,49 +4,46 @@ using System.Data.SQLite;
 using System.Windows;
 using System.Windows.Input;
 
-
 namespace StoreManagementApp.pages
 {
-    public partial class AddData : Window, IWindowManipulationMethods
+    public partial class AddProvider : Window, IWindowManipulationMethods
     {
-        private readonly List<IObserver> _productObservers = new();
-        public AddData()
+        private readonly List<IObserver> _providerObservers = new();
+        public AddProvider()
         {
             InitializeComponent();
             this.StateChanged += new EventHandler(Window_StateChanged);
             this.KeyDown += HandleEnterKey;
         }
 
-        private void AddDataToDB(object sender, RoutedEventArgs e)
+        private void AddProviderToDB(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(name.Text) ||
-                string.IsNullOrWhiteSpace(category.Text) ||
-                string.IsNullOrWhiteSpace(producent.Text) ||
-                string.IsNullOrWhiteSpace(price.Text) ||
-                string.IsNullOrWhiteSpace(availability.Text))
-            {
-                MessageBox.Show("Wszystkie pola muszą być wypełnione.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
             using (SQLiteConnection dbconnection = new(DatabaseHelper.DatabasePath))
             {
+                if (string.IsNullOrWhiteSpace(name.Text) ||
+                string.IsNullOrWhiteSpace(www.Text) ||
+                string.IsNullOrWhiteSpace(phone.Text) ||
+                string.IsNullOrWhiteSpace(email.Text))
+                {
+                    MessageBox.Show("Wszystkie pola muszą być wypełnione.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 dbconnection.Open();
 
-                string sql = "INSERT INTO Product VALUES(@id_product, @name, @category, @producent, @price, @availability)";
+                string sql = "INSERT INTO Provider VALUES(@id, @name, @www, @phone_number, @email)";
                 SQLiteCommand command = new(sql, dbconnection);
-                command.Parameters.AddWithValue("@id_product", null);
+                command.Parameters.AddWithValue("@id", null);
                 command.Parameters.AddWithValue("@name", name.Text);
-                command.Parameters.AddWithValue("@category", category.Text);
-                command.Parameters.AddWithValue("@producent", producent.Text);
-                command.Parameters.AddWithValue("@price", price.Text);
-                command.Parameters.AddWithValue("@availability", availability.Text);
+                command.Parameters.AddWithValue("@www", www.Text);
+                command.Parameters.AddWithValue("@phone_number", phone.Text);
+                command.Parameters.AddWithValue("@email", email.Text);
                 command.ExecuteNonQuery();
 
                 dbconnection.Close();
             }
 
-            foreach (var observer in _productObservers)
+            foreach (var observer in _providerObservers)
             {
                 observer.RefreshItemsList();
             }
@@ -54,17 +51,17 @@ namespace StoreManagementApp.pages
             Window.GetWindow(this).Close();
         }
 
+        public void Attach(IObserver observer)
+        {
+            _providerObservers.Add(observer);
+        }
+
         private void HandleEnterKey(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                AddDataToDB(sender, e);
+                AddProviderToDB(sender, e);
             }
-        }
-
-        public void Attach(IObserver observer)
-        {
-            _productObservers.Add(observer);
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -108,6 +105,5 @@ namespace StoreManagementApp.pages
                 this.DragMove();
             }
         }
-
     }
 }

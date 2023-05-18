@@ -3,12 +3,14 @@ using System.Windows;
 using System.Windows.Input;
 using System.Data.SQLite;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace StoreManagementApp.pages
 {
     public partial class UpdateData : Window, IWindowManipulationMethods
     {
-        private readonly List<IProductObserver> _productObservers = new();
+        private readonly List<IObserver> _productObservers = new();
 
         private static int Id { get; set; }
 
@@ -16,6 +18,7 @@ namespace StoreManagementApp.pages
         {
             InitializeComponent();
             this.StateChanged += new EventHandler(Window_StateChanged);
+            this.KeyDown += HandleEnterKey;
 
             UpdateData.Id = id;
             update_name.Text = name;
@@ -27,6 +30,16 @@ namespace StoreManagementApp.pages
 
         private void EditDataInDB(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(update_name.Text) ||
+                string.IsNullOrWhiteSpace(update_category.Text) ||
+                string.IsNullOrWhiteSpace(update_producent.Text) ||
+                string.IsNullOrWhiteSpace(update_availability.Text) ||
+                string.IsNullOrWhiteSpace(update_price.Text))
+            {
+                MessageBox.Show("Wszystkie pola muszą być wypełnione.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             using (SQLiteConnection dbconnection = new(DatabaseHelper.DatabasePath))
             {
                 dbconnection.Open();
@@ -46,13 +59,21 @@ namespace StoreManagementApp.pages
 
             foreach (var observer in _productObservers)
             {
-                observer.RefreshProductList();
+                observer.RefreshItemsList();
             }
 
             Window.GetWindow(this).Close();
         }
 
-        public void Attach(IProductObserver observer)
+        private void HandleEnterKey(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                EditDataInDB(sender, e);
+            }
+        }
+
+        public void Attach(IObserver observer)
         {
             _productObservers.Add(observer);
         }
