@@ -3,6 +3,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Data.SQLite;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace StoreManagementApp.pages
 {
@@ -28,6 +30,16 @@ namespace StoreManagementApp.pages
 
         private void EditDataInDB(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(update_name.Text) ||
+                string.IsNullOrWhiteSpace(update_category.Text) ||
+                string.IsNullOrWhiteSpace(update_producent.Text) ||
+                string.IsNullOrWhiteSpace(update_availability.Text) ||
+                string.IsNullOrWhiteSpace(update_price.Text))
+            {
+                MessageBox.Show("Wszystkie pola muszą być wypełnione.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             using (SQLiteConnection dbconnection = new(DatabaseHelper.DatabasePath))
             {
                 dbconnection.Open();

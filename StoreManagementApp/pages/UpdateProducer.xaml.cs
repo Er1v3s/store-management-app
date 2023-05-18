@@ -30,6 +30,16 @@ namespace StoreManagementApp.pages
 
         private void EditProducerInDB(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(update_name.Text) ||
+                string.IsNullOrWhiteSpace(update_www.Text) ||
+                string.IsNullOrWhiteSpace(update_tin.Text) ||
+                string.IsNullOrWhiteSpace(update_phone.Text) ||
+                string.IsNullOrWhiteSpace(update_email.Text))
+            {
+                MessageBox.Show("Wszystkie pola muszą być wypełnione.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             using (SQLiteConnection dbconnection = new(DatabaseHelper.DatabasePath))
             {
                 dbconnection.Open();

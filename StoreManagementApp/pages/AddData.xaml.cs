@@ -19,6 +19,16 @@ namespace StoreManagementApp.pages
 
         private void AddDataToDB(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(name.Text) ||
+                string.IsNullOrWhiteSpace(category.Text) ||
+                string.IsNullOrWhiteSpace(producent.Text) ||
+                string.IsNullOrWhiteSpace(price.Text) ||
+                string.IsNullOrWhiteSpace(availability.Text))
+            {
+                MessageBox.Show("Wszystkie pola muszą być wypełnione.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             using (SQLiteConnection dbconnection = new(DatabaseHelper.DatabasePath))
             {
                 dbconnection.Open();

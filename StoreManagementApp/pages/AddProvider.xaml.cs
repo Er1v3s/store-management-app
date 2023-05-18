@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 
@@ -21,6 +20,15 @@ namespace StoreManagementApp.pages
         {
             using (SQLiteConnection dbconnection = new(DatabaseHelper.DatabasePath))
             {
+                if (string.IsNullOrWhiteSpace(name.Text) ||
+                string.IsNullOrWhiteSpace(www.Text) ||
+                string.IsNullOrWhiteSpace(phone.Text) ||
+                string.IsNullOrWhiteSpace(email.Text))
+                {
+                    MessageBox.Show("Wszystkie pola muszą być wypełnione.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 dbconnection.Open();
 
                 string sql = "INSERT INTO Provider VALUES(@id, @name, @www, @phone_number, @email)";
