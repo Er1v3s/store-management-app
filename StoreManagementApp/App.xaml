@@ -385,19 +385,10 @@
                     <Setter Property="Foreground" Value="#ffffff"/>
                 </Trigger>
 
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#597ef3"/>
-                    <Setter Property="Foreground" Value="#ffffff"/>
+                <Trigger Property="IsSelected" Value="true">
+                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="Foreground" Value="#597ef3"/>
                 </Trigger>
-
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="IsSelected" Value="true" />
-                        <Condition Property="Selector.IsSelectionActive" Value="false" />
-                    </MultiTrigger.Conditions>
-                    <Setter Property="Background" Value="#dfdfdf"/>
-                </MultiTrigger>
-
             </Style.Triggers>
         </Style>
         <!-- #endregion DataGrid Style -->
